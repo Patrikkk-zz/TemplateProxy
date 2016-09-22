@@ -1,47 +1,67 @@
-# Windows image file caches
-Thumbs.db
+# Sublime Text #
+*.sublime-*
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*/bin/*
+*/obj/*
+bin/*
+obj/*
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store?
 ehthumbs.db
+Icon?
+Thumbs.db
 
-# Folder config file
-Desktop.ini
+# Visual Studio #
+##################################
+*.userprefs
+*.suo
+*.sdf
+*.opensdf
+*.cache
+*.pdb
+*.csproj.user
+*/_ReSharper*/*
+*.user
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+#Template Bat file#
+###################
+postbuild.bat
+/TestResults
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# JetBrains Crap #
+##################
+*.dotCover
+_ReSharper.*
 
-# Windows shortcuts
-*.lnk
-
-# =========================
-# Operating System Files
-# =========================
-
-# OSX
-# =========================
-
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# GTFO NuGet stuff #
+####################
+packages/*
