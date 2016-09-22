@@ -7,8 +7,8 @@
     <ProjectGuid>{10F0697C-B0E7-467E-B37F-FF473661F8EB}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TemplateProxy</RootNamespace>
-    <AssemblyName>TemplateProxy</AssemblyName>
+    <RootNamespace>Proxy</RootNamespace>
+    <AssemblyName>Proxy</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -42,9 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Client.cs" />
     <Compile Include="Proxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerClient.cs" />
+    <Compile Include="SocketAsyncEventArgsPool.cs" />
+    <Compile Include="SocketListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
