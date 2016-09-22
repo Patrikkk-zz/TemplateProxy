@@ -112,22 +112,19 @@ namespace EndClient
 			if (e.SocketError == SocketError.Success)
 			{
 				Console.WriteLine("Received data!");
-				Console.WriteLine($"Length: {e.Buffer.Length}");
-				string text = Convert.ToBase64String(e.Buffer);
-				Console.WriteLine($"Data: text");
+				Console.WriteLine($"Length: {e.BytesTransferred}");
+				byte[] data = new byte[e.BytesTransferred];
+				Buffer.BlockCopy(e.Buffer, 0, data, 0, data.Length);
+				string text = Encoding.Default.GetString(data);
+				Console.WriteLine($"Data: {text}");
 			}
 			StartReceive(e);
 		}
 
 		public void SendData(string text)
 		{
-			byte[] data = Convert.FromBase64String(text);
-			RecSendAsyncEventArgs.SetBuffer(data, 0, data.Length);
-			bool willRaiseEvent = ClientSocket.SendAsync(RecSendAsyncEventArgs);
-			if (!willRaiseEvent)
-			{
-				ProcessSend(RecSendAsyncEventArgs);
-			}
+			byte[] data = Encoding.Default.GetBytes(text);
+			ClientSocket.Send(data);
 		}
 
 		private void ProcessSend(SocketAsyncEventArgs receiveSendEventArgs)

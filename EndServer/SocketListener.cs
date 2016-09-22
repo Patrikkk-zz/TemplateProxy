@@ -304,8 +304,10 @@ namespace EndServer
 			{
 				Console.WriteLine("Received data!");
 				Console.WriteLine($"Length: {e.Buffer.Length}");
-				string text = Convert.ToBase64String(e.Buffer);
-				Console.WriteLine($"Data: text");
+				byte[] data = new byte[e.BytesTransferred];
+				Buffer.BlockCopy(e.Buffer, 0, data, 0, data.Length);
+				string text = Encoding.Default.GetString(data);
+				Console.WriteLine($"Data: {text}");
 			}
 			// Display recieved data. 
 
@@ -331,14 +333,8 @@ namespace EndServer
 
 		public void SendData(string text, Client client)
 		{
-
-			byte[] data = Convert.FromBase64String(text);
-			client.ReceiveSendEventArgs.SetBuffer(data, 0, data.Length);
-            bool willRaiseEvent = client.ReceiveSendEventArgs.AcceptSocket.SendAsync(client.ReceiveSendEventArgs);
-			if (!willRaiseEvent)
-			{
-				ProcessSend(client.ReceiveSendEventArgs);
-			}
+			byte[] data = Encoding.Default.GetBytes(text);
+			client.ReceiveSendEventArgs.AcceptSocket.Send(data);
 		}
 
 		public void CloseClientSocket(SocketAsyncEventArgs e)
