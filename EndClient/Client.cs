@@ -114,6 +114,14 @@ namespace EndClient
 			Console.WriteLine("Received data!");
 			Console.WriteLine($"OpInfo{e.SocketError}");
 			// Display Data
+			if (e.BytesTransferred == 0)
+			{
+				Console.WriteLine("Server closed the connection unexpectedly!");
+				Console.WriteLine("Press any key to close the client...");
+				Console.ReadLine();
+				Environment.Exit(3);
+				return;
+			}
 			if (e.SocketError == SocketError.Success)
 			{
 				Console.WriteLine($"Length: {e.BytesTransferred}");

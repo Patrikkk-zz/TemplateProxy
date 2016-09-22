@@ -63,7 +63,7 @@ namespace EndServer
 			this.PoolOfRecSendEventArgs = new SocketAsyncEventArgsPool(MaxConnections + 1);
 			this.PoolOfAcceptEventArgs = new SocketAsyncEventArgsPool(30);
 			this.BufferSize = 1024;
-			this.ServerEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 3001);
+			this.ServerEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 3000);
 			this.Clients = new Client[MaxConnections];
 		}
 
