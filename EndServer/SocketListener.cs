@@ -303,7 +303,7 @@ namespace EndServer
 			if (e.SocketError == SocketError.Success)
 			{
 				Console.WriteLine("Received data!");
-				Console.WriteLine($"Length: {e.Buffer.Length}");
+				Console.WriteLine($"Length: {e.BytesTransferred}");
 				byte[] data = new byte[e.BytesTransferred];
 				Buffer.BlockCopy(e.Buffer, 0, data, 0, data.Length);
 				string text = Encoding.Default.GetString(data);
