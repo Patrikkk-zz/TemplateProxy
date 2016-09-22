@@ -83,6 +83,9 @@ namespace EndClient
 
 		private void IO_Completed(object sender, SocketAsyncEventArgs e)
 		{
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.WriteLine($"LastOP: {e.LastOperation}");
+			Console.ForegroundColor = ConsoleColor.Gray;
 			// determine which type of operation just completed and call the associated handler
 			switch (e.LastOperation)
 			{
@@ -108,15 +111,24 @@ namespace EndClient
 
 		private void ProcessReceive(SocketAsyncEventArgs e)
 		{
+			Console.WriteLine("Received data!");
+			Console.WriteLine($"OpInfo{e.SocketError}");
 			// Display Data
 			if (e.SocketError == SocketError.Success)
 			{
-				Console.WriteLine("Received data!");
 				Console.WriteLine($"Length: {e.BytesTransferred}");
 				byte[] data = new byte[e.BytesTransferred];
 				Buffer.BlockCopy(e.Buffer, 0, data, 0, data.Length);
 				string text = Encoding.Default.GetString(data);
 				Console.WriteLine($"Data: {text}");
+			}
+			else if (e.SocketError == SocketError.ConnectionReset)
+			{
+				Console.WriteLine("Server closed the connection unexpectedly!");
+				Console.WriteLine("Press any key to close the client...");
+				Console.ReadLine();
+				Environment.Exit(3);
+                return;
 			}
 			StartReceive(e);
 		}

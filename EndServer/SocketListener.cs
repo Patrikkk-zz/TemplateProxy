@@ -259,6 +259,9 @@ namespace EndServer
 			//Any code that you put in this method will NOT be called if
 			//the operation completes synchronously, which will probably happen when
 			//there is some kind of socket error.
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.WriteLine($"LastOP: {e.LastOperation}");
+			Console.ForegroundColor = ConsoleColor.Gray;
 
 			// Determine which type of operation just completed and call the associated handler
 			switch (e.LastOperation)
@@ -280,6 +283,8 @@ namespace EndServer
 
 		private void ProcessReceive(SocketAsyncEventArgs e)
 		{
+			Console.WriteLine("Received data!");
+
 			// If there was a socket error, close the connection. This is NOT a normal
 			// situation, if you get an error here.
 			// In the Microsoft example code they had this error situation handled
@@ -302,7 +307,6 @@ namespace EndServer
 
 			if (e.SocketError == SocketError.Success)
 			{
-				Console.WriteLine("Received data!");
 				Console.WriteLine($"Length: {e.BytesTransferred}");
 				byte[] data = new byte[e.BytesTransferred];
 				Buffer.BlockCopy(e.Buffer, 0, data, 0, data.Length);
@@ -323,7 +327,7 @@ namespace EndServer
 		{
 			if (receiveSendEventArgs.SocketError == SocketError.Success)
 			{
-				StartReceive(receiveSendEventArgs);
+				//StartReceive(receiveSendEventArgs);
 			}
 			else
 			{

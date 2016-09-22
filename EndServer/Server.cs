@@ -68,7 +68,6 @@ namespace EndServer
 									if (client != null && client.IsConnected)
 									{
 										SocketListener.SendData(input, client);
-										break;
 									}
 								}
 							}
