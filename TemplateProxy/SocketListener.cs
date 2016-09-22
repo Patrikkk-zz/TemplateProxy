@@ -313,6 +313,9 @@ namespace Proxy
 				Buffer.BlockCopy(e.Buffer, 0, data, 0, data.Length);
 				string text = Encoding.Default.GetString(data);
 				Console.WriteLine($"Data: {text}");
+
+				int senderId = (int)e.UserToken;
+				Clients[senderId].ServerClient.SendData(text);
 			}
 			// Display recieved data. 
 

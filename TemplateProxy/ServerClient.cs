@@ -14,7 +14,7 @@ namespace Proxy
 		/// <summary>
 		/// Socket connection of our client.
 		/// </summary>
-		public Socket ClientSocket { get; set; }
+		public Socket Socket { get; set; }
 
 		/// <summary>
 		/// Indicates if our client is actually connected.
@@ -30,10 +30,13 @@ namespace Proxy
 
 		public int BufferSize { get; set; }
 
-		public ServerClient(IPEndPoint hostEndPoint)
+		public Client ParentClient { get; set; }
+
+		public ServerClient(IPEndPoint hostEndPoint, Client parentClient)
 		{
+			ParentClient = parentClient;
 			HostEndPoint = hostEndPoint;
-			ClientSocket = new Socket(HostEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+			Socket = new Socket(HostEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 			BufferSize = 1024;
 			Connect();
 		}
@@ -42,11 +45,11 @@ namespace Proxy
 		{
 			RecSendAsyncEventArgs = new SocketAsyncEventArgs();
 
-			RecSendAsyncEventArgs.UserToken = ClientSocket;
+			RecSendAsyncEventArgs.UserToken = ParentClient.Id;
 			RecSendAsyncEventArgs.RemoteEndPoint = HostEndPoint;
 			RecSendAsyncEventArgs.Completed += new EventHandler<SocketAsyncEventArgs>(IO_Completed);
 
-			bool willRaiseEvent = ClientSocket.ConnectAsync(RecSendAsyncEventArgs);
+			bool willRaiseEvent = Socket.ConnectAsync(RecSendAsyncEventArgs);
 			if (!willRaiseEvent)
 			{
 				ProcessConnect(RecSendAsyncEventArgs);
@@ -130,6 +133,8 @@ namespace Proxy
 				Buffer.BlockCopy(e.Buffer, 0, data, 0, data.Length);
 				string text = Encoding.Default.GetString(data);
 				Console.WriteLine($"Data: {text}");
+
+				ParentClient.SendData(text);
 			}
 			else if (e.SocketError == SocketError.ConnectionReset)
 			{
@@ -145,7 +150,7 @@ namespace Proxy
 		public void SendData(string text)
 		{
 			byte[] data = Encoding.Default.GetBytes(text);
-			ClientSocket.Send(data);
+			Socket.Send(data);
 		}
 
 		private void ProcessSend(SocketAsyncEventArgs receiveSendEventArgs)

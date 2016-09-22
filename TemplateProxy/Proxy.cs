@@ -34,7 +34,7 @@ namespace Proxy
 					{
 						case "connect":
 							{
-								ServerClient serverClient = new ServerClient(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 3000));
+								//ServerClient serverClient = new ServerClient(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 3000));
 
 							}
 							break;

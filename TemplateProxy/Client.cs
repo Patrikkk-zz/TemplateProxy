@@ -25,15 +25,24 @@ namespace Proxy
 		/// </summary>
 		public bool IsConnected { get; set; }
 
+		public Socket Socket { get; set; }
+
 		public ServerClient ServerClient { get; set; }
 
 
 		public Client(SocketAsyncEventArgs receiveSendEventArgs, int id, bool isConnected)
 		{
 			this.ReceiveSendEventArgs = receiveSendEventArgs;
+			this.Socket = receiveSendEventArgs.AcceptSocket;
 			this.Id = id;
 			this.IsConnected = isConnected;
-			ServerClient = new ServerClient(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 3000));
+			ServerClient = new ServerClient(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 3000), this);
+		}
+
+		public void SendData(string text)
+		{
+			byte[] data = Encoding.Default.GetBytes(text);
+			Socket.Send(data);
 		}
 
 		public void Reset()
